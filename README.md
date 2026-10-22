@@ -8,5 +8,5 @@ Com `node build.js --watch` ele regera sozinho a cada alteração.
 ## SENAI Esports (hub de jogos)
 
 Abra `hub/index.html` para entrar no hub: crie uma conta, faça login e escolha um jogo.
-Para adicionar jogos, edite a lista `GAMES` no começo do `<script>` de `hub/index.html`
-(defina `url` e `status: 'live'`).
+Os jogos ficam na lista `GAMES` no começo do `<script>` de `hub/index.html`
+(`url` é para onde o botão Jogar leva; a capa fica em `hub/img/`).
