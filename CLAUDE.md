@@ -4,8 +4,8 @@ FPS de sobrevivência contra zumbis no navegador, com Three.js r128 (local, em `
 
 ## Como trabalhar neste projeto
 
-- Edite apenas os arquivos em `src/`. O `index.html` é gerado.
-- Depois de qualquer mudança rode `node build.js` e abra `index.html` no navegador para testar.
+- Edite apenas os arquivos em `src/`. O `poeira-morta.html` é gerado.
+- Depois de qualquer mudança rode `node build.js` e abra `poeira-morta.html` no navegador para testar.
 - Sem dependências, sem npm install. Nada de imagens ou sons externos: tudo é procedural.
 - Nada carregado de outros sites (CDN, Google Fonts etc.), por privacidade/LGPD: fontes em `fonts/` (OFL), Three.js em `vendor/`.
 - Todo o JS roda como um único script clássico; os módulos são objetos globais (`const X = (() => {...})()`), carregados na ordem numérica dos arquivos. Um módulo pode usar outro definido depois, desde que só na execução (não na definição).
@@ -38,8 +38,6 @@ FPS de sobrevivência contra zumbis no navegador, com Three.js r128 (local, em `
 
 ## Hub SENAI Esports
 
-- `hub/index.html` (entrada + lista), `hub/admin.html` (painel), `hub/legal.html` (termos e privacidade). Os jogos vêm de `/api/games`.
-- `server/server.js`: servidor Node (única dependência: `pg`). Guarda os jogos no Postgres (`DATABASE_URL`) ou em arquivos; admin via `ADMIN_PASSWORD`. Jogos iniciais em `server/seed-games.json`.
-- Rodar: `cd server && npm install`, depois `ADMIN_PASSWORD=... node server/server.js` na raiz. Deploy: `render.yaml`.
-- Tudo que vem do admin é validado no servidor (`cleanGame`) e escapado no hub (`esc`). Mantenha os dois ao adicionar campos.
-
+- Site estático. `index.html` da raiz só redireciona para `hub/`.
+- `hub/index.html` (entrada + lista), `hub/games.js` (lista de jogos, constante `GAMES`), `hub/legal.html` (termos e privacidade), capas em `hub/img/`.
+- Os textos dos jogos são escapados no hub (`esc`); mantenha isso ao adicionar campos.

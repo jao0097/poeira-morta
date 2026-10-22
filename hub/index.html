@@ -257,7 +257,7 @@ footer.site p { max-width: 720px; margin: 0 auto 6px; }
       <h3>Jogos</h3>
       <span id="libCount"></span>
     </div>
-    <div class="grid" id="grid"><div class="status">Carregando jogos...</div></div>
+    <div class="grid" id="grid"></div>
   </main>
 
   <footer class="site">
@@ -306,9 +306,9 @@ footer.site p { max-width: 720px; margin: 0 auto 6px; }
   </div>
 </div>
 
+<script src="games.js"></script>
 <script>
-// Os jogos vêm do servidor (/api/games) e são cadastrados pelo admin em admin.html.
-let GAMES = [];
+// A lista de jogos fica em games.js (constante GAMES).
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -453,22 +453,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGame();
 window.addEventListener('pageshow', () => $('launch').classList.add('hidden'));
 
 // ---------- Início ----------
-async function loadGames() {
-  try {
-    const r = await fetch('/api/games', { cache: 'no-cache' });
-    if (!r.ok) throw new Error();
-    GAMES = (await r.json()).games || [];
-    $('wCount').textContent = GAMES.length ? `${GAMES.length} ${GAMES.length === 1 ? 'jogo disponível' : 'jogos disponíveis'}` : '';
-    renderGrid();
-  } catch {
-    $('grid').innerHTML = '<div class="status">Não foi possível carregar os jogos. Tente recarregar a página.</div>';
-  }
-}
+$('wCount').textContent = GAMES.length ? `${GAMES.length} ${GAMES.length === 1 ? 'jogo disponível' : 'jogos disponíveis'}` : '';
+renderGrid();
 
 let entered = false;
 try { entered = sessionStorage.getItem('entered') === '1'; } catch {}
-loadGames().then(() => { if (entered) showHub(); else startArt(); });
-if (entered) { $('welcome').classList.add('hidden'); $('hub').classList.remove('hidden'); }
+if (entered) showHub(); else startArt();
 </script>
 </body>
 </html>
