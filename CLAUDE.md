@@ -1,12 +1,13 @@
 # Poeira Morta
 
-FPS de sobrevivência contra zumbis no navegador, com Three.js r128 via CDN. Visual low-poly inspirado em CS 1.6, texturas geradas em canvas, áudio procedural com Web Audio.
+FPS de sobrevivência contra zumbis no navegador, com Three.js r128 (local, em `vendor/three.min.js`). Visual low-poly inspirado em CS 1.6, texturas geradas em canvas, áudio procedural com Web Audio.
 
 ## Como trabalhar neste projeto
 
 - Edite apenas os arquivos em `src/`. O `index.html` é gerado.
 - Depois de qualquer mudança rode `node build.js` e abra `index.html` no navegador para testar.
 - Sem dependências, sem npm install. Nada de imagens ou sons externos: tudo é procedural.
+- Nada carregado de outros sites (CDN, Google Fonts etc.), por privacidade/LGPD: fontes em `fonts/` (OFL), Three.js em `vendor/`.
 - Todo o JS roda como um único script clássico; os módulos são objetos globais (`const X = (() => {...})()`), carregados na ordem numérica dos arquivos. Um módulo pode usar outro definido depois, desde que só na execução (não na definição).
 - Unidades em metros. `U = 0.0254` converte unidades GoldSrc.
 - Textos da interface em português do Brasil.

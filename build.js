@@ -2,7 +2,7 @@
 // Uso: node build.js   (ou: node build.js --watch)
 const fs = require('fs'), path = require('path');
 const SRC = path.join(__dirname, 'src'), OUT = path.join(__dirname, 'index.html');
-const THREE_CDN = '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>';
+const THREE_CDN = '<script src="vendor/three.min.js"></script>';
 const ERR = "window.addEventListener('error',e=>{const l=document.getElementById('loading');if(l&&!l.classList.contains('hidden')){l.textContent='Erro ao iniciar: '+e.message;l.style.fontSize='22px';}});";
 function build() {
   const files = fs.readdirSync(SRC).sort();

@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Poeira Morta</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   --sand:#d9b77a; --bone:#efe3c8; --rust:#b0552a; --blood:#a3261a; --umber:#1b130d; --umber-2:#2b1f16;
@@ -316,7 +314,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   <div id="board" class="hidden"><h3>Corrida atual</h3><dl class="stats" id="boardStats"></dl></div>
   <div id="fps" class="hidden"></div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="vendor/three.min.js"></script>
 <script>
 window.addEventListener('error',e=>{const l=document.getElementById('loading');if(l&&!l.classList.contains('hidden')){l.textContent='Erro ao iniciar: '+e.message;l.style.fontSize='22px';}});
 'use strict';
