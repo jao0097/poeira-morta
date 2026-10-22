@@ -1,0 +1,15 @@
+{
+  "name": "senai-esports-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor do hub SENAI Esports: páginas estáticas, API de jogos e painel do admin.",
+  "type": "module",
+  "main": "server.js",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

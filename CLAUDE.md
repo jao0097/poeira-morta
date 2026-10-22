@@ -35,3 +35,11 @@ FPS de sobrevivência contra zumbis no navegador, com Three.js r128 (local, em `
 - Duração do dia: `hour += dt / (...)` no loop de `Game`; cores do céu em `STOPS`.
 - Melhorias da Oficina: `UPGRADES` em `01-core.js`.
 - Ao adicionar caixas ao mapa, use `addBox` antes do bloco "merge por material"; a navegação é recalculada sozinha (`Nav.build`).
+
+## Hub SENAI Esports
+
+- `hub/index.html` (entrada + lista), `hub/admin.html` (painel), `hub/legal.html` (termos e privacidade). Os jogos vêm de `/api/games`.
+- `server/server.js`: servidor Node (única dependência: `pg`). Guarda os jogos no Postgres (`DATABASE_URL`) ou em arquivos; admin via `ADMIN_PASSWORD`. Jogos iniciais em `server/seed-games.json`.
+- Rodar: `cd server && npm install`, depois `ADMIN_PASSWORD=... node server/server.js` na raiz. Deploy: `render.yaml`.
+- Tudo que vem do admin é validado no servidor (`cleanGame`) e escapado no hub (`esc`). Mantenha os dois ao adicionar campos.
+

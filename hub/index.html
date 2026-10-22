@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>SENAI Esports</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
@@ -29,7 +28,6 @@ body {
 }
 h1, h2, h3, h4, .brand, .btn { font-family: Rajdhani, Inter, sans-serif; letter-spacing: .02em; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
-input { font: inherit; color: inherit; }
 a { color: inherit; }
 img { display: block; max-width: 100%; }
 .hidden { display: none !important; }
@@ -54,54 +52,32 @@ img { display: block; max-width: 100%; }
 .btn-red:hover { background: var(--red2); }
 .btn-ghost { background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14); }
 .btn-ghost:hover { border-color: rgba(255, 255, 255, .4); }
-.btn-danger { background: transparent; border: 1px solid rgba(255, 51, 65, .5); color: var(--red2); }
-.btn-danger:hover { background: rgba(255, 51, 65, .12); }
 .btn svg { width: 18px; height: 18px; }
 
-/* ---------- Login ---------- */
-#auth { min-height: 100vh; display: grid; grid-template-columns: 1.1fr 1fr; }
-.auth-art { position: relative; overflow: hidden; background: #000; }
-.auth-art img {
+/* ---------- Página de entrada ---------- */
+#welcome { position: relative; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #000; }
+.w-art { position: absolute; inset: 0; }
+.w-art img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transition: opacity 1.2s; transform: scale(1.04);
 }
-.auth-art img.on { opacity: .75; animation: zoom 9s linear forwards; }
+.w-art img.on { opacity: .55; animation: zoom 9s linear forwards; }
 @keyframes zoom { to { transform: scale(1.12); } }
-.auth-art::after {
+#welcome::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent 40%, var(--bg)), linear-gradient(0deg, rgba(0,0,0,.7), transparent 50%);
+  background: radial-gradient(900px 600px at 15% 100%, rgba(227, 6, 19, .25), transparent 70%), linear-gradient(90deg, rgba(5, 6, 10, .95) 0%, rgba(5, 6, 10, .6) 55%, rgba(5, 6, 10, .3) 100%);
 }
-.auth-art .caption { position: absolute; left: 40px; bottom: 40px; z-index: 1; max-width: 420px; }
-.auth-art .caption h1 { font-size: 52px; line-height: 1; margin-bottom: 10px; }
-.auth-art .caption p { color: #d0d4de; }
-.auth-side {
-  display: grid; place-items: center; padding: 32px 16px;
-  background: radial-gradient(600px 400px at 80% 0%, rgba(227, 6, 19, .18), transparent 70%), var(--bg);
-}
-.auth-box { width: 100%; max-width: 380px; }
-.auth-box .brand { font-size: 28px; margin-bottom: 6px; }
-.auth-box .sub { color: var(--muted); margin-bottom: 26px; }
-.tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 4px; margin-bottom: 22px; }
-.tabs button { height: 38px; border-radius: 9px; font-weight: 600; color: var(--muted); transition: background .15s, color .15s; }
-.tabs button.on { background: var(--red); color: #fff; }
-.field { margin-bottom: 14px; position: relative; }
-.field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-.field input {
-  width: 100%; height: 48px; padding: 0 14px; border-radius: 10px;
-  background: var(--bg2); border: 1px solid var(--line); outline: none; transition: border-color .15s, box-shadow .15s;
-}
-.field input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(227, 6, 19, .2); }
-.field .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
-.field .eye { position: absolute; right: 8px; top: 30px; height: 32px; padding: 0 10px; border-radius: 8px; font-size: 12px; color: var(--muted); }
-.field .eye:hover { color: var(--text); background: var(--line); }
-.field.pw input { padding-right: 70px; }
-.check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #c9cdd8; margin: 4px 0 12px; cursor: pointer; }
-.check input { width: 18px; height: 18px; margin-top: 1px; flex: none; accent-color: var(--red); }
-.check a { color: var(--text); }
-.auth-box .btn { width: 100%; margin-top: 8px; }
-.msg { min-height: 22px; font-size: 13px; margin-top: 12px; color: var(--red2); }
-.note { font-size: 12px; color: var(--muted); margin-top: 16px; }
-.note a { color: #c9cdd8; }
+.w-top, .w-main, .w-foot { position: relative; z-index: 1; }
+.w-top { padding: 24px 40px; }
+.w-main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 24px 40px; max-width: 680px; }
+.w-main .kicker { display: inline-block; align-self: flex-start; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 18px; }
+.w-main h1 { font-size: clamp(48px, 9vw, 96px); line-height: .9; margin-bottom: 18px; text-shadow: 0 6px 30px rgba(0,0,0,.5); }
+.w-main h1 b { color: var(--red2); }
+.w-main p { color: #d6dae3; font-size: 18px; margin-bottom: 30px; max-width: 520px; }
+.w-main .btn { height: 58px; padding: 0 44px; font-size: 22px; align-self: flex-start; }
+.w-count { color: var(--muted); font-size: 14px; margin-top: 16px; min-height: 21px; }
+.w-foot { padding: 20px 40px; color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+.w-foot a { color: #c9cdd8; }
 
 /* ---------- Topo ---------- */
 header {
@@ -109,16 +85,7 @@ header {
   padding: 12px 24px; background: rgba(11, 13, 18, .85); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.user { margin-left: auto; display: flex; align-items: center; gap: 10px; padding: 4px 10px 4px 4px; border-radius: 999px; border: 1px solid transparent; text-align: left; }
-.user:hover { border-color: var(--line); background: var(--bg2); }
-.avatar {
-  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; flex: none;
-  font-weight: 700; color: #fff; font-family: Rajdhani, sans-serif; font-size: 19px;
-  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--line);
-}
-.user .who { line-height: 1.2; }
-.user .who small { display: block; color: var(--muted); font-size: 12px; }
-.user .who span { font-weight: 600; display: block; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+header .brand { cursor: pointer; }
 
 main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
@@ -172,19 +139,18 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .card:hover .play-hint { opacity: 1; }
 .play-hint span { width: 64px; height: 64px; border-radius: 50%; background: var(--red); display: grid; place-items: center; box-shadow: 0 8px 30px rgba(227,6,19,.5); }
 .play-hint svg { width: 26px; height: 26px; margin-left: 4px; }
-.card .body { padding: 14px 16px 16px; display: flex; align-items: center; gap: 12px; }
+.card .body { padding: 14px 16px 16px; }
 .card h4 { font-size: 24px; line-height: 1.1; }
 .card .meta { color: var(--muted); font-size: 13px; }
-.card .count { margin-left: auto; text-align: right; font-size: 12px; color: var(--muted); white-space: nowrap; }
-.card .count b { display: block; font-family: Rajdhani, sans-serif; font-size: 20px; color: var(--text); }
+.status { color: var(--muted); text-align: center; padding: 60px 16px; grid-column: 1 / -1; }
 
-footer { max-width: 1200px; margin: 0 auto; padding: 40px 24px 32px; color: var(--muted); font-size: 12px; text-align: center; }
-footer nav { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; }
-footer nav a, footer nav button { color: #c9cdd8; text-decoration: none; }
-footer nav a:hover, footer nav button:hover { color: var(--text); text-decoration: underline; }
-footer p { max-width: 720px; margin: 0 auto 6px; }
+footer.site { max-width: 1200px; margin: 0 auto; padding: 40px 24px 32px; color: var(--muted); font-size: 12px; text-align: center; }
+footer.site nav { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; }
+footer.site nav a { color: #c9cdd8; text-decoration: none; }
+footer.site nav a:hover { color: var(--text); text-decoration: underline; }
+footer.site p { max-width: 720px; margin: 0 auto 6px; }
 
-/* ---------- Janelas ---------- */
+/* ---------- Janela do jogo ---------- */
 .overlay {
   position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, .75); backdrop-filter: blur(6px);
   display: grid; place-items: center; padding: 16px; animation: fade .15s;
@@ -206,7 +172,7 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
 .modal .content { padding: 0 30px 30px; margin-top: -60px; position: relative; z-index: 1; }
 .modal h2 { font-size: 46px; line-height: 1; margin-bottom: 4px; }
 .modal .genre { color: var(--accent, var(--red2)); font-weight: 600; margin-bottom: 14px; }
-.modal .desc { color: #d0d4de; margin-bottom: 18px; }
+.modal .desc { color: #d0d4de; margin-bottom: 18px; white-space: pre-line; }
 .features { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 18px; margin-bottom: 20px; }
 .features li { position: relative; padding-left: 18px; color: #d0d4de; font-size: 14px; }
 .features li::before { content: ""; position: absolute; left: 0; top: 8px; width: 7px; height: 7px; border-radius: 2px; background: var(--accent, var(--red)); transform: rotate(45deg); }
@@ -219,22 +185,9 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
 .controls div { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; font-size: 13px; color: var(--muted); }
 .controls kbd { font-family: inherit; font-weight: 700; color: var(--text); margin-right: 6px; }
 .notice { font-size: 13px; color: #c9cdd8; background: var(--bg2); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 8px; padding: 10px 12px; margin-bottom: 20px; }
-.notice a { color: var(--text); }
 .modal .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .modal .actions .btn-red { min-width: 200px; }
 .modal .warn { font-size: 13px; color: var(--gold); }
-
-/* Minha conta */
-.modal.small { max-width: 520px; }
-.modal.small .content { margin-top: 0; padding: 30px; }
-.modal.small h2 { font-size: 34px; margin-bottom: 16px; }
-.data-list { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 4px 14px; margin-bottom: 16px; }
-.data-list div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-.data-list div:last-child { border-bottom: 0; }
-.data-list dt { color: var(--muted); }
-.data-list dd { font-weight: 600; text-align: right; overflow-wrap: anywhere; }
-.small-print { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
-.small-print a { color: #c9cdd8; }
 
 /* ---------- Tela de carregamento ---------- */
 #launch {
@@ -250,18 +203,11 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
 .bar i { display: block; height: 100%; width: 0; background: var(--red); animation: load .9s ease-in forwards; }
 @keyframes load { to { width: 100%; } }
 
-@media (max-width: 860px) {
-  #auth { grid-template-columns: 1fr; }
-  .auth-art { min-height: 240px; }
-  .auth-art::after { background: linear-gradient(0deg, var(--bg), transparent 70%); }
-  .auth-art .caption { left: 16px; bottom: 16px; }
-  .auth-art .caption h1 { font-size: 36px; }
-}
 @media (max-width: 640px) {
+  .w-top, .w-main, .w-foot { padding-left: 18px; padding-right: 18px; }
+  .w-main .btn { align-self: stretch; }
   header { padding: 10px 16px; gap: 10px; }
   .brand { font-size: 19px; }
-  .user .who { display: none; }
-  .user { padding: 4px; }
   main { padding: 16px; }
   .hero { aspect-ratio: auto; min-height: 420px; }
   .slide::after { background: linear-gradient(0deg, rgba(5, 6, 10, .95) 15%, transparent 75%); }
@@ -270,7 +216,6 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
   .dots { left: 18px; right: auto; bottom: 18px; }
   .grid { grid-template-columns: 1fr; }
   .modal .content { padding: 0 18px 20px; margin-top: -40px; }
-  .modal.small .content { padding: 22px 18px; }
   .modal h2 { font-size: 34px; }
   .modal .actions .btn { flex: 1; }
 }
@@ -281,58 +226,28 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
 </head>
 <body>
 
-<!-- ======================= LOGIN ======================= -->
-<section id="auth">
-  <div class="auth-art" id="authArt">
-    <div class="caption">
-      <h1>Jogue com a sua turma.</h1>
-      <p>Os jogos da turma em um só lugar.</p>
-    </div>
+<!-- ======================= ENTRADA ======================= -->
+<section id="welcome">
+  <div class="w-art" id="wArt"></div>
+  <div class="w-top"><div class="brand"><div class="logo">S</div><span>SENAI <b>Esports</b></span></div></div>
+  <div class="w-main">
+    <span class="kicker">Hub de jogos</span>
+    <h1>Jogue com a <b>sua turma.</b></h1>
+    <p>Os jogos criados pelos alunos, todos em um só lugar. Escolha um e comece a jogar no navegador.</p>
+    <button class="btn btn-red" id="enterBtn" type="button">Entrar</button>
+    <div class="w-count" id="wCount"></div>
   </div>
-  <div class="auth-side">
-    <div class="auth-box">
-      <div class="brand"><div class="logo">S</div>SENAI <b>Esports</b></div>
-      <p class="sub">Entre para acessar os jogos</p>
-      <div class="tabs">
-        <button type="button" id="tabLogin" class="on">Entrar</button>
-        <button type="button" id="tabSignup">Criar conta</button>
-      </div>
-      <form id="authForm" autocomplete="on" novalidate>
-        <div class="field">
-          <label for="fUser">Apelido</label>
-          <input id="fUser" name="username" autocomplete="username" maxlength="20" required>
-          <p class="hint hidden" id="userHint">Use um apelido. Não use seu nome completo, e-mail, telefone ou documento.</p>
-        </div>
-        <div class="field pw">
-          <label for="fPass">Senha</label>
-          <input id="fPass" name="password" type="password" autocomplete="current-password" required>
-          <button type="button" class="eye" id="eye">Mostrar</button>
-        </div>
-        <div id="signupExtra" class="hidden">
-          <div class="field">
-            <label for="fPass2">Confirmar senha</label>
-            <input id="fPass2" type="password" autocomplete="new-password">
-          </div>
-          <label class="check"><input type="checkbox" id="fTerms"><span>Li e aceito os <a href="legal.html#termos" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="legal.html#privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
-          <label class="check"><input type="checkbox" id="fAge"><span>Tenho 12 anos ou mais, ou meu pai, mãe ou responsável autorizou o uso.</span></label>
-        </div>
-        <label class="check hidden" id="loginTermsWrap"><input type="checkbox" id="fLoginTerms"><span>Atualizamos as regras. Li e aceito os <a href="legal.html#termos" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="legal.html#privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>
-        <button class="btn btn-red" id="authBtn" type="submit">Entrar</button>
-        <div class="msg" id="authMsg" role="alert"></div>
-      </form>
-      <p class="note">Sua conta fica salva só neste navegador; nada é enviado para servidores. <a href="legal.html#privacidade" target="_blank" rel="noopener">Saiba mais</a>.</p>
-    </div>
+  <div class="w-foot">
+    <span>Projeto estudantil não oficial, sem vínculo com o SENAI ou a CNI.</span>
+    <a href="legal.html#termos">Termos de Uso</a>
+    <a href="legal.html#privacidade">Privacidade</a>
   </div>
 </section>
 
 <!-- ======================= HUB ======================= -->
 <section id="hub" class="hidden">
   <header>
-    <div class="brand"><div class="logo">S</div><span>SENAI <b>Esports</b></span></div>
-    <button class="user" id="userBtn" type="button" aria-label="Minha conta">
-      <div class="avatar" id="avatar"></div>
-      <div class="who"><small id="greet"></small><span id="userName"></span></div>
-    </button>
+    <div class="brand" id="homeBtn" title="Voltar ao início"><div class="logo">S</div><span>SENAI <b>Esports</b></span></div>
   </header>
 
   <main>
@@ -342,19 +257,18 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
       <h3>Jogos</h3>
       <span id="libCount"></span>
     </div>
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid"><div class="status">Carregando jogos...</div></div>
   </main>
-</section>
 
-<footer id="footer">
-  <nav>
-    <a href="legal.html#termos">Termos de Uso</a>
-    <a href="legal.html#privacidade">Política de Privacidade</a>
-    <button type="button" id="footAccount" class="hidden">Minha conta</button>
-  </nav>
-  <p>Projeto estudantil independente e sem fins lucrativos. Não é um site oficial do SENAI e não tem vínculo com o SENAI ou a CNI. As marcas citadas pertencem aos seus titulares.</p>
-  <p>Cada jogo pertence aos seus criadores. Jogos hospedados em outros sites seguem as regras e a política de privacidade desses sites.</p>
-</footer>
+  <footer class="site">
+    <nav>
+      <a href="legal.html#termos">Termos de Uso</a>
+      <a href="legal.html#privacidade">Política de Privacidade</a>
+    </nav>
+    <p>Projeto estudantil independente e sem fins lucrativos. Não é um site oficial do SENAI e não tem vínculo com o SENAI ou a CNI. As marcas citadas pertencem aos seus titulares.</p>
+    <p>Cada jogo pertence aos seus criadores. Jogos hospedados em outros sites seguem as regras e a política de privacidade desses sites.</p>
+  </footer>
+</section>
 
 <!-- ======================= JANELA DO JOGO ======================= -->
 <div class="overlay hidden" id="overlay">
@@ -382,24 +296,6 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
   </div>
 </div>
 
-<!-- ======================= MINHA CONTA ======================= -->
-<div class="overlay hidden" id="accOverlay">
-  <div class="modal small" role="dialog" aria-modal="true" aria-labelledby="accTitle">
-    <button class="close" id="accClose" type="button" aria-label="Fechar">&times;</button>
-    <div class="content">
-      <h2 id="accTitle">Minha conta</h2>
-      <p class="small-print">Estes são todos os dados que o SENAI Esports guarda sobre você. Eles ficam apenas neste navegador.</p>
-      <dl class="data-list" id="accData"></dl>
-      <p class="small-print">A senha é guardada de forma embaralhada (hash PBKDF2 com sal) e não pode ser lida. <a href="legal.html#privacidade" target="_blank" rel="noopener">Política de Privacidade</a></p>
-      <div class="actions">
-        <button class="btn btn-ghost" id="accExport" type="button">Baixar meus dados</button>
-        <button class="btn btn-ghost" id="accLogout" type="button">Sair</button>
-        <button class="btn btn-danger" id="accDelete" type="button">Excluir conta</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ======================= CARREGANDO ======================= -->
 <div id="launch" class="hidden">
   <div class="bg" id="lBg"></div>
@@ -411,283 +307,57 @@ footer p { max-width: 720px; margin: 0 auto 6px; }
 </div>
 
 <script>
-// =====================================================================
-// Jogos do hub. `url` é para onde o botão Jogar leva; `img` é a capa
-// (sem `img`, o hub desenha uma capa com o nome do jogo).
-// =====================================================================
-const GAMES = [
-  {
-    id: 'poeira-morta',
-    title: 'Poeira Morta',
-    genre: 'FPS de sobrevivência',
-    url: '../poeira-morta.html',
-    img: 'img/poeira-morta.jpg',
-    accent: '#e0a458',
-    tags: [['Tiro', ''], ['Zumbis', ''], ['1 jogador', '']],
-    short: 'Sobreviva a ondas de zumbis numa cidade tomada pela poeira.',
-    desc: 'FPS de sobrevivência com visual low-poly no estilo dos jogos de tiro clássicos. Cada abate dá dinheiro para comprar armas nas paredes; cada morte cobra tudo. Aguente as ondas, derrote os chefes e evolua seu personagem na Oficina.',
-    features: [
-      'Ondas de zumbis cada vez maiores, com chefes',
-      'Armas compradas nas paredes do mapa',
-      'Ciclo de dia e noite',
-      'Oficina com melhorias permanentes',
-      'Três dificuldades: Fácil, Normal e Difícil',
-    ],
-    stats: [['Jogadores', '1'], ['Plataforma', 'PC (navegador)'], ['Modo', 'Sobrevivência']],
-    controls: [['WASD', 'Mover'], ['Mouse', 'Mirar'], ['Clique', 'Atirar'], ['R', 'Recarregar'], ['E', 'Comprar'], ['Espaço', 'Pular'], ['Ctrl', 'Agachar'], ['G', 'Granada']],
-    warn: 'Precisa de teclado e mouse.',
-  },
-  {
-    id: 'senai-rush',
-    title: 'SENAI Rush',
-    genre: 'Corrida de kart 3D',
-    url: 'https://senai-rush.onrender.com/',
-    img: 'img/senai-rush.jpg',
-    accent: '#ffc53d',
-    tags: [['Corrida', ''], ['Online', 'green'], ['Até 8 jogadores', '']],
-    short: 'Corrida arcade de kart pelo campus da escola.',
-    desc: 'Escolha seu piloto, acelere por oito pistas e use os itens para passar os rivais. Corra sozinho, em tela dividida com os amigos ou online numa sala com código.',
-    features: [
-      '8 pistas, do Campus à Neon Avenue',
-      '9 pilotos com atributos diferentes',
-      'Drift com turbo e itens nas caixas',
-      'Online por código de sala e tela dividida',
-      'Quatro dificuldades: 50cc a 200cc',
-    ],
-    stats: [['Jogadores', '1 a 8'], ['Plataforma', 'PC e celular'], ['Modo', 'Corrida / Online']],
-    controls: [['WASD / Setas', 'Dirigir'], ['Shift', 'Drift'], ['Espaço', 'Item'], ['C', 'Olhar para trás'], ['Esc', 'Pausar']],
-    warn: '',
-  },
-  {
-    id: 'gincana-4x0',
-    title: 'Gincana 4x0',
-    genre: 'Simulador de futebol 7',
-    url: 'https://tavasreidocartola.github.io/Gincana-4x0/',
-    img: 'img/gincana-4x0.jpg',
-    accent: '#2e9e4f',
-    tags: [['Futebol', ''], ['Estratégia', ''], ['1 jogador', '']],
-    short: 'Monte seu time de Futebol 7 e dispute o campeonato interclasses.',
-    desc: 'Sorteie turmas, escolha um jogador de cada uma e monte seu elenco de 7. Depois é só acompanhar o mata-mata: partidas narradas lance a lance, pênaltis e as estatísticas da campanha no final.',
-    features: [
-      'Três formações: equilibrada, ofensiva e defensiva',
-      'Modo Clássico ou Às Cegas (força dos jogadores oculta)',
-      'Partidas com narração lance a lance',
-      'Disputa de pênaltis e estatísticas do torneio',
-    ],
-    stats: [['Jogadores', '1'], ['Plataforma', 'PC e celular'], ['Modo', 'Campeonato']],
-    controls: [['Clique / Toque', 'Escolher formação, modo e jogadores']],
-    warn: '',
-  },
-  {
-    id: 'riftstrike',
-    title: 'RiftStrike',
-    genre: 'Jogo online',
-    url: 'https://riftstrike.onrender.com/',
-    img: '',
-    accent: '#7c4dff',
-    tags: [['Online', 'green']],
-    short: 'Jogo online no navegador.',
-    desc: 'Jogo online que roda direto no navegador.',
-    features: [],
-    stats: [['Plataforma', 'Navegador']],
-    controls: [],
-    warn: '',
-  },
-  {
-    id: 'senai-suspeitos',
-    title: 'SENAI Suspeitos',
-    genre: 'Jogo online',
-    url: 'https://senai-suspeitos.onrender.com/',
-    img: '',
-    accent: '#00b4d8',
-    tags: [['Online', 'green']],
-    short: 'Jogo online no navegador.',
-    desc: 'Jogo online que roda direto no navegador.',
-    features: [],
-    stats: [['Plataforma', 'Navegador']],
-    controls: [],
-    warn: '',
-  },
-];
+// Os jogos vêm do servidor (/api/games) e são cadastrados pelo admin em admin.html.
+let GAMES = [];
 
-// =====================================================================
-// Contas (somente no localStorage deste navegador)
-// =====================================================================
-const Store = {
-  get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
-  del(k) { try { localStorage.removeItem(k); } catch {} },
-};
-
-const Auth = (() => {
-  const USERS = 'senai_users', SESSION = 'senai_session', ITER = 150000;
-  const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-  const unhex = h => new Uint8Array(h.match(/../g).map(x => parseInt(x, 16)));
-  const enc = new TextEncoder();
-  function needCrypto() {
-    if (!(window.crypto && crypto.subtle)) throw new Error('Este navegador não permite guardar a senha com segurança. Abra o site por um endereço https.');
-  }
-  async function pbkdf2(pass, salt) {
-    const key = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveBits']);
-    return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: ITER, hash: 'SHA-256' }, key, 256));
-  }
-  async function makeHash(pass) {
-    const salt = crypto.getRandomValues(new Uint8Array(16));
-    return { algo: 'pbkdf2-sha256', iter: ITER, salt: hex(salt), hash: await pbkdf2(pass, salt) };
-  }
-  async function verify(u, key, pass) {
-    if (u.pw) return (await pbkdf2(pass, unhex(u.pw.salt))) === u.pw.hash;
-    // Contas da versão anterior (SHA-256 simples): confere e depois troca por PBKDF2.
-    if (u.pass) return hex(await crypto.subtle.digest('SHA-256', enc.encode(key + ':' + pass))) === u.pass;
-    return false;
-  }
-  return {
-    async signup(name, pass) {
-      needCrypto();
-      const users = Store.get(USERS, {}), key = name.toLowerCase();
-      if (users[key]) throw new Error('Esse apelido já existe neste navegador.');
-      users[key] = { name, pw: await makeHash(pass), created: Date.now(), consent: { terms: Date.now(), version: 1 }, plays: {} };
-      if (!Store.set(USERS, users)) throw new Error('Não foi possível salvar. Verifique se o navegador permite armazenamento local.');
-      Store.set(SESSION, key);
-    },
-    async login(name, pass, acceptTerms) {
-      needCrypto();
-      const users = Store.get(USERS, {}), key = name.toLowerCase(), u = users[key];
-      if (!u || !(await verify(u, key, pass))) throw new Error('Apelido ou senha incorretos.');
-      // Contas criadas antes dos termos precisam aceitá-los no primeiro login.
-      if (!u.consent) {
-        if (!acceptTerms) throw Object.assign(new Error('Para continuar, aceite os Termos de Uso e a Política de Privacidade.'), { needConsent: true });
-        u.consent = { terms: Date.now(), version: 1 };
-      }
-      if (!u.pw) { u.pw = await makeHash(pass); delete u.pass; }
-      Store.set(USERS, users);
-      Store.set(SESSION, key);
-    },
-    current() { const key = Store.get(SESSION, null); return key ? Store.get(USERS, {})[key] || null : null; },
-    addPlay(gameId) {
-      const key = Store.get(SESSION, null), users = Store.get(USERS, {});
-      if (!users[key]) return;
-      const plays = users[key].plays || (users[key].plays = {});
-      plays[gameId] = (plays[gameId] || 0) + 1;
-      Store.set(USERS, users);
-    },
-    exportData() {
-      const u = this.current();
-      if (!u) return null;
-      return { apelido: u.name, conta_criada_em: new Date(u.created).toISOString(), termos_aceitos_em: u.consent ? new Date(u.consent.terms).toISOString() : null, partidas_por_jogo: u.plays || {} };
-    },
-    deleteAccount() {
-      const key = Store.get(SESSION, null), users = Store.get(USERS, {});
-      delete users[key];
-      if (Object.keys(users).length) Store.set(USERS, users); else Store.del(USERS);
-      Store.del(SESSION);
-    },
-    logout() { Store.del(SESSION); },
-  };
-})();
-
-// =====================================================================
-// Interface
-// =====================================================================
 const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>';
+const safeColor = c => /^#[0-9a-f]{6}$/i.test(c || '') ? c : '#e30613';
 const coverHtml = (g, alt = '') => g.img
   ? `<img src="${esc(g.img)}" alt="${esc(alt)}">`
-  : `<div class="ph" style="--accent:${g.accent}"><span>${esc(g.title)}</span></div>`;
-const hostOf = url => { try { const u = new URL(url, location.href); return u.origin === location.origin || u.protocol === 'file:' ? '' : u.host; } catch { return ''; } };
-let mode = 'login', openGame = null, slide = 0, slideTimer = null, artTimer = null;
+  : `<div class="ph" style="--accent:${safeColor(g.accent)}"><span>${esc(g.title)}</span></div>`;
+const hostOf = url => { try { const u = new URL(url, location.href); return u.origin === location.origin ? '' : u.host; } catch { return ''; } };
+const tagsHtml = g => (g.tags || []).map(([t, c]) => `<span class="tag ${c === 'green' || c === 'red' ? c : ''}">${esc(t)}</span>`).join('');
+let openGame = null, slide = 0, slideTimer = null, artTimer = null;
 
-// ---------- Login ----------
-function setMode(m) {
-  mode = m;
-  $('tabLogin').classList.toggle('on', m === 'login');
-  $('tabSignup').classList.toggle('on', m === 'signup');
-  $('signupExtra').classList.toggle('hidden', m === 'login');
-  $('userHint').classList.toggle('hidden', m === 'login');
-  $('fPass').autocomplete = m === 'login' ? 'current-password' : 'new-password';
-  $('authBtn').textContent = m === 'login' ? 'Entrar' : 'Criar conta';
-  $('loginTermsWrap').classList.add('hidden');
-  $('authMsg').textContent = '';
-}
-$('tabLogin').onclick = () => setMode('login');
-$('tabSignup').onclick = () => setMode('signup');
-$('eye').onclick = () => {
-  const show = $('fPass').type === 'password';
-  $('fPass').type = $('fPass2').type = show ? 'text' : 'password';
-  $('eye').textContent = show ? 'Ocultar' : 'Mostrar';
-};
+// Versões antigas do hub tinham contas salvas no navegador; não são mais usadas.
+try { localStorage.removeItem('senai_users'); localStorage.removeItem('senai_session'); } catch {}
 
-$('authForm').onsubmit = async e => {
-  e.preventDefault();
-  const name = $('fUser').value.trim(), pass = $('fPass').value, say = t => $('authMsg').textContent = t;
-  if (!/^[\wÀ-ÿ.\- ]{3,20}$/.test(name)) return say('O apelido deve ter de 3 a 20 caracteres (letras, números, . _ -).');
-  if (mode === 'signup' && /\d{6,}/.test(name)) return say('Não use números longos no apelido (como telefone ou documento).');
-  if (pass.length < 6) return say('A senha precisa de pelo menos 6 caracteres.');
-  $('authBtn').disabled = true;
-  try {
-    if (mode === 'signup') {
-      if (pass !== $('fPass2').value) return say('As senhas não conferem.');
-      if (!$('fTerms').checked) return say('Para criar a conta, aceite os Termos de Uso e a Política de Privacidade.');
-      if (!$('fAge').checked) return say('Menores de 12 anos precisam da autorização de um responsável.');
-      await Auth.signup(name, pass);
-    } else {
-      await Auth.login(name, pass, $('fLoginTerms').checked);
-    }
-    $('authForm').reset();
-    $('loginTermsWrap').classList.add('hidden');
-    enterHub();
-  } catch (err) {
-    if (err.needConsent) $('loginTermsWrap').classList.remove('hidden');
-    say(err.message);
-  }
-  finally { $('authBtn').disabled = false; }
-};
-
-// Fundo do login alternando as capas dos jogos.
-function startAuthArt() {
-  const art = $('authArt');
-  if (!art.querySelector('img')) GAMES.filter(g => g.img).forEach(g => { const i = new Image(); i.src = g.img; i.alt = ''; art.prepend(i); });
-  const imgs = [...art.querySelectorAll('img')];
+// ---------- Entrada ----------
+function startArt() {
+  const art = $('wArt');
+  if (!art.children.length) GAMES.filter(g => g.img).forEach(g => { const i = new Image(); i.src = g.img; i.alt = ''; art.appendChild(i); });
+  const imgs = [...art.children];
+  if (!imgs.length) return;
   let i = 0;
   const step = () => { imgs.forEach((im, k) => im.classList.toggle('on', k === i)); i = (i + 1) % imgs.length; };
   step(); clearInterval(artTimer); artTimer = setInterval(step, 7000);
 }
 
-function leaveHub() {
-  closeGame(); closeAccount(); clearInterval(slideTimer);
-  $('hub').classList.add('hidden'); $('footAccount').classList.add('hidden'); $('auth').classList.remove('hidden');
-  setMode('login'); startAuthArt();
+function showHub() {
+  try { sessionStorage.setItem('entered', '1'); } catch {}
+  clearInterval(artTimer);
+  $('welcome').classList.add('hidden');
+  $('hub').classList.remove('hidden');
+  window.scrollTo(0, 0);
+  renderHero();
 }
+function showWelcome() {
+  try { sessionStorage.removeItem('entered'); } catch {}
+  closeGame(); clearInterval(slideTimer);
+  $('hub').classList.add('hidden');
+  $('welcome').classList.remove('hidden');
+  startArt();
+}
+$('enterBtn').onclick = showHub;
+$('homeBtn').onclick = showWelcome;
 
 // ---------- Hub ----------
-function avatarColor(name) {
-  let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 360;
-  return `hsl(${h} 65% 45%)`;
-}
-function greeting() {
-  const h = new Date().getHours();
-  return h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-}
-const tagsHtml = g => g.tags.map(([t, c]) => `<span class="tag ${c}">${esc(t)}</span>`).join('');
-
-function enterHub() {
-  const u = Auth.current();
-  if (!u) return startAuthArt();
-  clearInterval(artTimer);
-  $('auth').classList.add('hidden');
-  $('hub').classList.remove('hidden');
-  $('footAccount').classList.remove('hidden');
-  $('userName').textContent = u.name;
-  $('greet').textContent = greeting() + ',';
-  $('avatar').textContent = u.name[0].toUpperCase();
-  $('avatar').style.background = avatarColor(u.name);
-  renderHero();
-  renderGrid();
-}
-
 function renderHero() {
   const hero = $('hero');
+  if (!GAMES.length) { hero.classList.add('hidden'); return; }
+  hero.classList.remove('hidden');
   hero.innerHTML = GAMES.map((g, i) => `
     <div class="slide" data-i="${i}">
       ${coverHtml(g)}
@@ -709,66 +379,62 @@ function renderHero() {
   autoSlide();
 }
 function goSlide(i) {
+  if (!GAMES.length) return;
   slide = (i + GAMES.length) % GAMES.length;
   $('hero').querySelectorAll('.slide').forEach((s, k) => s.classList.toggle('on', k === slide));
   $('hero').querySelectorAll('[data-dot]').forEach((d, k) => d.classList.toggle('on', k === slide));
 }
-function autoSlide() { clearInterval(slideTimer); slideTimer = setInterval(() => goSlide(slide + 1), 7000); }
+function autoSlide() { clearInterval(slideTimer); if (GAMES.length > 1) slideTimer = setInterval(() => goSlide(slide + 1), 7000); }
 
 function renderGrid() {
-  const plays = (Auth.current() || {}).plays || {};
-  $('libCount').textContent = GAMES.length + ' jogos disponíveis';
+  $('libCount').textContent = GAMES.length === 1 ? '1 jogo disponível' : GAMES.length + ' jogos disponíveis';
+  if (!GAMES.length) { $('grid').innerHTML = '<div class="status">Nenhum jogo cadastrado ainda.</div>'; return; }
   $('grid').innerHTML = GAMES.map((g, i) => `
-    <button class="card" type="button" data-i="${i}" style="--accent:${g.accent}">
+    <button class="card" type="button" data-i="${i}" style="--accent:${safeColor(g.accent)}">
       <div class="thumb">
         ${coverHtml(g, g.title)}
         <div class="tags">${tagsHtml(g)}</div>
         <div class="play-hint"><span>${PLAY_ICON}</span></div>
       </div>
-      <div class="body">
-        <div><h4>${esc(g.title)}</h4><div class="meta">${esc(g.genre)}</div></div>
-        <div class="count"><b>${plays[g.id] || 0}</b>partidas</div>
-      </div>
+      <div class="body"><h4>${esc(g.title)}</h4><div class="meta">${esc(g.genre)}</div></div>
     </button>`).join('');
   $('grid').querySelectorAll('.card').forEach(c => c.onclick = () => showGame(GAMES[c.dataset.i]));
 }
 
 // ---------- Janela do jogo ----------
-function lockScroll(on) { document.body.style.overflow = on ? 'hidden' : ''; }
-
 function showGame(g) {
   openGame = g;
-  document.querySelector('#overlay .modal').style.setProperty('--accent', g.accent);
+  document.querySelector('#overlay .modal').style.setProperty('--accent', safeColor(g.accent));
   $('mCover').innerHTML = coverHtml(g, g.title);
   $('mTags').innerHTML = tagsHtml(g);
   $('mTitle').textContent = g.title;
-  $('mGenre').textContent = g.genre;
-  $('mDesc').textContent = g.desc;
-  $('mFeatures').innerHTML = g.features.map(f => `<li>${esc(f)}</li>`).join('');
-  $('mFeatures').classList.toggle('hidden', !g.features.length);
+  $('mGenre').textContent = g.genre || '';
+  $('mDesc').textContent = g.desc || g.short || '';
+  const features = g.features || [], controls = g.controls || [];
+  $('mFeatures').innerHTML = features.map(f => `<li>${esc(f)}</li>`).join('');
+  $('mFeatures').classList.toggle('hidden', !features.length);
   const host = hostOf(g.url);
-  const stats = [...g.stats, ['Endereço', host || 'Neste site']];
+  const stats = [...(g.stats || []), ['Endereço', host || 'Neste site']];
   $('mStats').innerHTML = stats.map(([k, v]) => `<div class="stat"><small>${esc(k)}</small><span title="${esc(v)}">${esc(v)}</span></div>`).join('');
-  $('mControls').innerHTML = g.controls.map(([k, v]) => `<div><kbd>${esc(k)}</kbd>${esc(v)}</div>`).join('');
-  $('mControlsWrap').classList.toggle('hidden', !g.controls.length);
+  $('mControls').innerHTML = controls.map(([k, v]) => `<div><kbd>${esc(k)}</kbd>${esc(v)}</div>`).join('');
+  $('mControlsWrap').classList.toggle('hidden', !controls.length);
   $('mExternal').classList.toggle('hidden', !host);
-  $('mExternal').innerHTML = host ? `Este jogo fica em outro site (<b>${esc(host)}</b>). Ao jogar, você sai do SENAI Esports e passa a seguir as regras e a política de privacidade daquele site. Não use lá a mesma senha daqui.` : '';
-  $('mWarn').textContent = g.warn;
+  $('mExternal').innerHTML = host ? `Este jogo fica em outro site (<b>${esc(host)}</b>). Ao jogar, você sai do SENAI Esports e passa a seguir as regras e a política de privacidade daquele site.` : '';
+  $('mWarn').textContent = g.warn || '';
   $('overlay').classList.remove('hidden');
   document.querySelector('#overlay .modal').scrollTop = 0;
-  lockScroll(true);
+  document.body.style.overflow = 'hidden';
   clearInterval(slideTimer);
   $('mPlay').focus();
 }
 function closeGame() {
   if (!openGame) return;
-  openGame = null; $('overlay').classList.add('hidden'); lockScroll(false);
+  openGame = null; $('overlay').classList.add('hidden'); document.body.style.overflow = '';
   if (!$('hub').classList.contains('hidden')) autoSlide();
 }
 
 // Mostra a tela de carregamento e vai para o jogo.
 function play(g) {
-  Auth.addPlay(g.id);
   const host = hostOf(g.url);
   $('lBg').innerHTML = coverHtml(g);
   $('lTitle').textContent = g.title;
@@ -781,52 +447,28 @@ $('mPlay').onclick = () => openGame && play(openGame);
 $('mClose').onclick = closeGame;
 $('mBack').onclick = closeGame;
 $('overlay').onclick = e => { if (e.target === $('overlay')) closeGame(); };
-
-// ---------- Minha conta ----------
-function showAccount() {
-  const d = Auth.exportData();
-  if (!d) return;
-  const fmt = iso => iso ? new Date(iso).toLocaleString('pt-BR') : '—';
-  const plays = GAMES.map(g => `${g.title}: ${d.partidas_por_jogo[g.id] || 0}`).join(' · ');
-  $('accData').innerHTML = [
-    ['Apelido', d.apelido], ['Conta criada em', fmt(d.conta_criada_em)],
-    ['Termos aceitos em', fmt(d.termos_aceitos_em)], ['Partidas', plays],
-  ].map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
-  $('accOverlay').classList.remove('hidden');
-  lockScroll(true);
-}
-function closeAccount() {
-  if ($('accOverlay').classList.contains('hidden')) return;
-  $('accOverlay').classList.add('hidden'); lockScroll(false);
-}
-$('userBtn').onclick = showAccount;
-$('footAccount').onclick = showAccount;
-$('accClose').onclick = closeAccount;
-$('accOverlay').onclick = e => { if (e.target === $('accOverlay')) closeAccount(); };
-$('accLogout').onclick = () => { Auth.logout(); leaveHub(); };
-$('accExport').onclick = () => {
-  const blob = new Blob([JSON.stringify(Auth.exportData(), null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = 'meus-dados-senai-esports.json';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-};
-$('accDelete').onclick = () => {
-  if (!confirm('Excluir sua conta e todos os seus dados deste navegador? Isso não pode ser desfeito.')) return;
-  Auth.deleteAccount();
-  leaveHub();
-  $('authMsg').textContent = 'Conta excluída.';
-};
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeGame(); closeAccount(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGame(); });
 
 // Ao voltar do jogo pelo botão "voltar" do navegador, a página pode vir do cache.
-window.addEventListener('pageshow', () => {
-  $('launch').classList.add('hidden');
-  if (Auth.current() && !$('hub').classList.contains('hidden')) renderGrid();
-});
+window.addEventListener('pageshow', () => $('launch').classList.add('hidden'));
 
-enterHub();
+// ---------- Início ----------
+async function loadGames() {
+  try {
+    const r = await fetch('/api/games', { cache: 'no-cache' });
+    if (!r.ok) throw new Error();
+    GAMES = (await r.json()).games || [];
+    $('wCount').textContent = GAMES.length ? `${GAMES.length} ${GAMES.length === 1 ? 'jogo disponível' : 'jogos disponíveis'}` : '';
+    renderGrid();
+  } catch {
+    $('grid').innerHTML = '<div class="status">Não foi possível carregar os jogos. Tente recarregar a página.</div>';
+  }
+}
+
+let entered = false;
+try { entered = sessionStorage.getItem('entered') === '1'; } catch {}
+loadGames().then(() => { if (entered) showHub(); else startArt(); });
+if (entered) { $('welcome').classList.add('hidden'); $('hub').classList.remove('hidden'); }
 </script>
 </body>
 </html>

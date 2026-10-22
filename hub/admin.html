@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Admin · SENAI Esports</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root { --bg: #0b0d12; --bg2: #12151d; --card: #171b25; --line: #262b38; --text: #eef0f5; --muted: #8b92a5; --red: #e30613; --red2: #ff3341; --ok: #2ecc71; --gold: #ffc53d; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font: 15px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+h1, h2, h3, .brand, .btn { font-family: Rajdhani, Inter, sans-serif; letter-spacing: .02em; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+input, textarea { font: inherit; color: inherit; }
+a { color: inherit; }
+.hidden { display: none !important; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; white-space: nowrap; }
+.brand .logo { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--red); color: #fff; transform: skewX(-8deg); }
+.brand b { color: var(--red2); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 18px; border-radius: 10px; font-weight: 700; font-size: 16px; text-transform: uppercase; transition: background .15s, border-color .15s; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red2); }
+.btn-ghost { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); }
+.btn-ghost:hover { border-color: rgba(255,255,255,.4); }
+.btn-danger { border: 1px solid rgba(255,51,65,.5); color: var(--red2); }
+.btn-danger:hover { background: rgba(255,51,65,.12); }
+.btn[disabled] { opacity: .5; cursor: wait; }
+
+/* Login */
+#login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(600px 400px at 50% 0%, rgba(227,6,19,.18), transparent 70%), var(--bg); }
+.login-box { width: 100%; max-width: 360px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 30px 26px; }
+.login-box .brand { margin-bottom: 4px; }
+.login-box p { color: var(--muted); margin-bottom: 22px; }
+.login-box .btn { width: 100%; margin-top: 6px; }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.field label i { font-style: normal; color: var(--red2); }
+.field input, .field textarea { width: 100%; padding: 11px 13px; border-radius: 10px; background: var(--bg2); border: 1px solid var(--line); outline: none; }
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--red); }
+.field .hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.msg { min-height: 22px; font-size: 13px; margin-top: 10px; color: var(--red2); }
+.msg.ok { color: var(--ok); }
+
+/* Painel */
+header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 14px; padding: 12px 24px; background: rgba(11,13,18,.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+header .tag { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+header nav { margin-left: auto; display: flex; gap: 8px; }
+main { max-width: 1240px; margin: 0 auto; padding: 24px; }
+.banner { background: rgba(255,197,61,.1); border: 1px solid rgba(255,197,61,.4); color: #ffe2a0; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; font-size: 14px; }
+.layout { display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; align-items: start; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.panel h2 { font-size: 26px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.list { display: flex; flex-direction: column; gap: 10px; }
+.item { display: grid; grid-template-columns: 96px 1fr auto; gap: 12px; align-items: center; padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg2); }
+.item.editing { border-color: var(--red); }
+.thumb { width: 96px; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #000; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph { width: 100%; height: 100%; display: grid; place-items: center; background: radial-gradient(120% 120% at 20% 10%, var(--accent), #0b0d12 70%); font: 700 13px Rajdhani, sans-serif; text-transform: uppercase; text-align: center; padding: 4px; }
+.item b { display: block; font-size: 15px; }
+.item small { color: var(--muted); font-size: 12px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.item .tools { display: flex; gap: 4px; }
+.icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); display: grid; place-items: center; font-size: 15px; }
+.icon:hover { border-color: var(--muted); }
+.icon.del:hover { border-color: var(--red2); color: var(--red2); }
+.icon[disabled] { opacity: .3; cursor: default; }
+
+.cover-box { display: grid; grid-template-columns: 200px 1fr; gap: 14px; align-items: center; }
+.cover-prev { aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--bg2); border: 1px dashed var(--line); display: grid; place-items: center; color: var(--muted); font-size: 12px; }
+.cover-prev img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.cover-tools input[type=file] { display: none; }
+.field label.btn { display: inline-flex; margin: 0; font-size: 16px; color: var(--text); cursor: pointer; }
+.color { display: flex; align-items: center; gap: 10px; }
+.color input[type=color] { width: 48px; height: 40px; padding: 2px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg2); cursor: pointer; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  header { padding: 10px 14px; flex-wrap: wrap; }
+  header .tag { display: none; }
+  main { padding: 14px; }
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .cover-box { grid-template-columns: 1fr; }
+  .item { grid-template-columns: 72px 1fr; }
+  .thumb { width: 72px; }
+  .item .tools { grid-column: 1 / -1; justify-content: flex-end; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= LOGIN ======================= -->
+<section id="login" class="hidden">
+  <form class="login-box" id="loginForm">
+    <div class="brand"><div class="logo">S</div><span>SENAI <b>Esports</b></span></div>
+    <p>Painel do admin</p>
+    <div class="field"><label for="lUser">Usuário</label><input id="lUser" autocomplete="username" required></div>
+    <div class="field"><label for="lPass">Senha</label><input id="lPass" type="password" autocomplete="current-password" required></div>
+    <button class="btn btn-red" id="lBtn" type="submit">Entrar</button>
+    <div class="msg" id="lMsg" role="alert"></div>
+  </form>
+</section>
+
+<!-- ======================= PAINEL ======================= -->
+<section id="panel" class="hidden">
+  <header>
+    <div class="brand"><div class="logo">S</div><span>SENAI <b>Esports</b></span></div>
+    <span class="tag">Admin</span>
+    <nav>
+      <a class="btn btn-ghost" href="./" target="_blank" rel="noopener">Ver hub</a>
+      <button class="btn btn-ghost" id="logout" type="button">Sair</button>
+    </nav>
+  </header>
+  <main>
+    <div class="banner hidden" id="banner"></div>
+    <div class="layout">
+      <div class="panel">
+        <h2>Jogos <button class="btn btn-red" id="newBtn" type="button">+ Novo jogo</button></h2>
+        <div class="list" id="list"></div>
+      </div>
+
+      <form class="panel" id="form" novalidate>
+        <h2 id="formTitle">Novo jogo</h2>
+        <div class="field"><label for="fTitle">Nome <i>*</i></label><input id="fTitle" maxlength="60"></div>
+        <div class="field"><label for="fUrl">Link do jogo <i>*</i></label><input id="fUrl" maxlength="500" placeholder="https://meu-jogo.onrender.com/"><p class="hint">Endereço completo com https://. Para uma página deste site, comece com / (ex.: /poeira-morta.html).</p></div>
+        <div class="field"><label for="fGenre">Gênero</label><input id="fGenre" maxlength="60" placeholder="Corrida de kart 3D"></div>
+        <div class="field"><label for="fShort">Descrição curta <i>*</i></label><input id="fShort" maxlength="160" placeholder="Uma frase que aparece no destaque"></div>
+        <div class="field"><label for="fDesc">Descrição completa</label><textarea id="fDesc" maxlength="1500"></textarea></div>
+        <div class="field"><label for="fFeatures">Destaques</label><textarea id="fFeatures" placeholder="8 pistas diferentes&#10;Modo online"></textarea><p class="hint">Um por linha (até 10).</p></div>
+        <div class="field"><label for="fTags">Etiquetas</label><input id="fTags" placeholder="Corrida, Online, Até 8 jogadores"><p class="hint">Separadas por vírgula (até 6). “Online” fica verde.</p></div>
+        <div class="row">
+          <div class="field"><label for="fPlayers">Jogadores</label><input id="fPlayers" maxlength="40" placeholder="1 a 8"></div>
+          <div class="field"><label for="fPlatform">Plataforma</label><input id="fPlatform" maxlength="40" placeholder="PC e celular"></div>
+          <div class="field"><label for="fMode">Modo</label><input id="fMode" maxlength="40" placeholder="Corrida / Online"></div>
+        </div>
+        <div class="field"><label for="fControls">Controles</label><textarea id="fControls" placeholder="WASD: Mover&#10;Espaço: Pular"></textarea><p class="hint">Um por linha, no formato “Tecla: ação”.</p></div>
+        <div class="field"><label for="fWarn">Aviso</label><input id="fWarn" maxlength="120" placeholder="Precisa de teclado e mouse."></div>
+        <div class="field">
+          <label>Capa</label>
+          <div class="cover-box">
+            <div class="cover-prev" id="coverPrev">Sem capa</div>
+            <div>
+              <div class="cover-tools">
+                <label class="btn btn-ghost" for="fCover">Escolher imagem</label>
+                <input type="file" id="fCover" accept="image/jpeg,image/png,image/webp">
+                <button class="btn btn-ghost" id="coverRemove" type="button">Remover</button>
+              </div>
+              <p class="hint">A imagem é cortada em 16:9 e reduzida automaticamente. Sem capa, o hub mostra o nome do jogo. Não use fotos de pessoas sem autorização.</p>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fAccent">Cor do jogo</label>
+          <div class="color"><input type="color" id="fAccent" value="#e30613"><span class="hint">Usada nas bordas, destaques e na capa sem imagem.</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-red" id="saveBtn" type="submit">Salvar</button>
+          <button class="btn btn-ghost" id="cancelBtn" type="button">Cancelar</button>
+          <button class="btn btn-danger hidden" id="delBtn" type="button">Excluir jogo</button>
+        </div>
+        <div class="msg" id="fMsg" role="alert"></div>
+      </form>
+    </div>
+  </main>
+</section>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let games = [], editing = null, cover; // cover: undefined = não mexer, '' = remover, data URL = nova
+
+async function api(method, path, body) {
+  // O servidor só aceita alterações em JSON (proteção contra pedidos de outros sites).
+  if (method !== 'GET' && !body) body = {};
+  const r = await fetch(path, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
+  let data = {};
+  try { data = await r.json(); } catch {}
+  if (r.status === 401 && path !== '/api/admin/login') { showLogin('Sua sessão expirou. Entre de novo.'); throw new Error(data.error || 'Sessão expirada.'); }
+  if (!r.ok) throw new Error(data.error || 'Erro ao falar com o servidor.');
+  return data;
+}
+
+// ---------- Login ----------
+function showLogin(msg = '') {
+  $('panel').classList.add('hidden'); $('login').classList.remove('hidden');
+  $('lMsg').textContent = msg; $('lUser').focus();
+}
+$('loginForm').onsubmit = async e => {
+  e.preventDefault();
+  $('lBtn').disabled = true; $('lMsg').textContent = '';
+  try {
+    await api('POST', '/api/admin/login', { user: $('lUser').value.trim(), pass: $('lPass').value });
+    $('lPass').value = '';
+    await openPanel();
+  } catch (err) { $('lMsg').textContent = err.message; }
+  finally { $('lBtn').disabled = false; }
+};
+$('logout').onclick = async () => { try { await api('POST', '/api/admin/logout', {}); } catch {} showLogin(); };
+
+// ---------- Painel ----------
+async function openPanel() {
+  const me = await api('GET', '/api/admin/me');
+  if (!me.admin) return showLogin(me.configured ? '' : 'O admin ainda não foi configurado no servidor (variável ADMIN_PASSWORD).');
+  $('login').classList.add('hidden'); $('panel').classList.remove('hidden');
+  $('banner').classList.toggle('hidden', me.persistent);
+  $('banner').textContent = 'Atenção: o servidor está sem banco de dados (DATABASE_URL). Os jogos que você adicionar ou mudar aqui somem quando o servidor reiniciar. Veja o README para configurar.';
+  await loadList();
+  newGame();
+}
+
+async function loadList() {
+  games = (await api('GET', '/api/games')).games;
+  $('list').innerHTML = games.map((g, i) => `
+    <div class="item${editing === g.id ? ' editing' : ''}" data-id="${esc(g.id)}">
+      <div class="thumb">${g.img ? `<img src="${esc(g.img)}" alt="">` : `<div class="ph" style="--accent:${/^#[0-9a-f]{6}$/i.test(g.accent) ? g.accent : '#e30613'}">${esc(g.title)}</div>`}</div>
+      <div><b>${esc(g.title)}</b><small>${esc(g.url)}</small></div>
+      <div class="tools">
+        <button class="icon" type="button" data-up="${i}" title="Subir" ${i === 0 ? 'disabled' : ''}>↑</button>
+        <button class="icon" type="button" data-down="${i}" title="Descer" ${i === games.length - 1 ? 'disabled' : ''}>↓</button>
+        <button class="icon" type="button" data-edit="${i}" title="Editar">✎</button>
+        <button class="icon del" type="button" data-del="${i}" title="Excluir">✕</button>
+      </div>
+    </div>`).join('') || '<p class="hint">Nenhum jogo ainda.</p>';
+  $('list').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => editGame(games[b.dataset.edit]));
+  $('list').querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeGame(games[b.dataset.del]));
+  $('list').querySelectorAll('[data-up]').forEach(b => b.onclick = () => move(+b.dataset.up, -1));
+  $('list').querySelectorAll('[data-down]').forEach(b => b.onclick = () => move(+b.dataset.down, 1));
+}
+
+async function move(i, d) {
+  const ids = games.map(g => g.id);
+  [ids[i], ids[i + d]] = [ids[i + d], ids[i]];
+  try { await api('POST', '/api/admin/order', { ids }); } catch (err) { alert(err.message); }
+  await loadList();
+}
+
+async function removeGame(g) {
+  if (!confirm(`Excluir "${g.title}" do hub? Isso não pode ser desfeito.`)) return;
+  try { await api('DELETE', '/api/admin/games/' + encodeURIComponent(g.id)); } catch (err) { return alert(err.message); }
+  if (editing === g.id) newGame();
+  await loadList();
+}
+
+// ---------- Formulário ----------
+const lines = s => s.split('\n').map(x => x.trim()).filter(Boolean);
+const stat = (g, k) => ((g.stats || []).find(s => s[0] === k) || [])[1] || '';
+
+function setCoverPreview(src) {
+  $('coverPrev').innerHTML = src ? `<img src="${esc(src)}" alt="">` : 'Sem capa';
+  $('coverRemove').classList.toggle('hidden', !src);
+}
+
+function fill(g) {
+  $('fTitle').value = g.title || '';
+  $('fUrl').value = g.url || '';
+  $('fGenre').value = g.genre || '';
+  $('fShort').value = g.short || '';
+  $('fDesc').value = g.desc || '';
+  $('fFeatures').value = (g.features || []).join('\n');
+  $('fTags').value = (g.tags || []).map(t => t[0]).join(', ');
+  $('fPlayers').value = stat(g, 'Jogadores');
+  $('fPlatform').value = stat(g, 'Plataforma');
+  $('fMode').value = stat(g, 'Modo');
+  $('fControls').value = (g.controls || []).map(([k, v]) => `${k}: ${v}`).join('\n');
+  $('fWarn').value = g.warn || '';
+  $('fAccent').value = /^#[0-9a-f]{6}$/i.test(g.accent || '') ? g.accent : '#e30613';
+  $('fCover').value = '';
+  cover = undefined;
+  setCoverPreview(g.img || '');
+  $('fMsg').textContent = '';
+  $('fMsg').classList.remove('ok');
+}
+
+function newGame() {
+  editing = null; fill({});
+  $('formTitle').textContent = 'Novo jogo';
+  $('delBtn').classList.add('hidden');
+  document.querySelectorAll('.item').forEach(el => el.classList.remove('editing'));
+}
+function editGame(g) {
+  editing = g.id; fill(g);
+  $('formTitle').textContent = 'Editar: ' + g.title;
+  $('delBtn').classList.remove('hidden');
+  document.querySelectorAll('.item').forEach(el => el.classList.toggle('editing', el.dataset.id === g.id));
+  $('form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+$('newBtn').onclick = newGame;
+$('cancelBtn').onclick = newGame;
+$('delBtn').onclick = () => { const g = games.find(x => x.id === editing); if (g) removeGame(g); };
+
+// Corta em 16:9 e reduz para no máximo 1280x720, em JPEG.
+$('fCover').onchange = () => {
+  const file = $('fCover').files[0];
+  if (!file) return;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) { $('fMsg').textContent = 'Use uma imagem JPG, PNG ou WEBP.'; return; }
+  const img = new Image();
+  img.onload = () => {
+    const W = Math.min(1280, img.width), H = Math.round(W * 9 / 16);
+    const scale = Math.max(W / img.width, H / img.height);
+    const c = document.createElement('canvas'); c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(img, (W - img.width * scale) / 2, (H - img.height * scale) / 2, img.width * scale, img.height * scale);
+    cover = c.toDataURL('image/jpeg', 0.85);
+    setCoverPreview(cover);
+    URL.revokeObjectURL(img.src);
+  };
+  img.onerror = () => { $('fMsg').textContent = 'Não foi possível abrir essa imagem.'; };
+  img.src = URL.createObjectURL(file);
+};
+$('coverRemove').onclick = () => { cover = ''; $('fCover').value = ''; setCoverPreview(''); };
+
+$('form').onsubmit = async e => {
+  e.preventDefault();
+  const say = (t, ok) => { $('fMsg').textContent = t; $('fMsg').classList.toggle('ok', !!ok); };
+  const body = {
+    title: $('fTitle').value, url: $('fUrl').value.trim(), genre: $('fGenre').value, short: $('fShort').value, desc: $('fDesc').value,
+    features: lines($('fFeatures').value),
+    tags: $('fTags').value.split(',').map(t => t.trim()).filter(Boolean).map(t => [t, /^online$/i.test(t) ? 'green' : '']),
+    stats: [['Jogadores', $('fPlayers').value], ['Plataforma', $('fPlatform').value], ['Modo', $('fMode').value]].filter(s => s[1].trim()),
+    controls: lines($('fControls').value).map(l => { const i = l.indexOf(':'); return i < 0 ? [l, ''] : [l.slice(0, i).trim(), l.slice(i + 1).trim()]; }),
+    warn: $('fWarn').value, accent: $('fAccent').value,
+  };
+  if (!body.title.trim()) return say('Informe o nome do jogo.');
+  if (!/^https?:\/\/\S+$/i.test(body.url) && !/^\/(?!\/)\S*$/.test(body.url)) return say('O link precisa começar com https:// (ou / para páginas deste site).');
+  if (!body.short.trim()) return say('Escreva uma descrição curta.');
+  if (cover !== undefined) body.cover = cover;
+  $('saveBtn').disabled = true; say('Salvando...', true);
+  try {
+    const { game } = editing
+      ? await api('PUT', '/api/admin/games/' + encodeURIComponent(editing), body)
+      : await api('POST', '/api/admin/games', body);
+    await loadList();
+    editGame(games.find(g => g.id === game.id) || game);
+    say('Salvo! Já aparece no hub para todo mundo.', true);
+  } catch (err) { say(err.message); }
+  finally { $('saveBtn').disabled = false; }
+};
+
+openPanel().catch(() => showLogin());
+</script>
+</body>
+</html>

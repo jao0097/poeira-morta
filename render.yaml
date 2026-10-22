@@ -1,0 +1,19 @@
+# Render Blueprint: um serviço Node serve o hub (/hub/), o Poeira Morta e a API de jogos.
+# Ao criar pelo Blueprint, o Render pede os valores marcados com sync: false.
+services:
+  - type: web
+    name: senai-esports
+    runtime: node
+    plan: free
+    buildCommand: cd server && npm ci
+    startCommand: node server/server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ADMIN_PASSWORD   # senha do painel /admin (nunca coloque no código)
+        sync: false
+      - key: DATABASE_URL     # Postgres onde ficam os jogos (ex.: Neon, gratuito)
+        sync: false
+      - key: SESSION_SECRET   # assina o cookie do admin
+        generateValue: true
